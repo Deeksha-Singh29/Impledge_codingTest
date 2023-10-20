@@ -30,7 +30,7 @@ void insertWord(TrieNode *root, const string &word) {
 }
 
 
-bool searchLongestCompoundWord(TrieNode *root, const string &word, int index, int count) {
+bool isCompoundWord(TrieNode *root, const string &word, int index, int count) {
   TrieNode *current = root;
   for (int i = index; i < word.length(); i++) {
     int letterIndex = word[i] - 'a';
@@ -42,7 +42,7 @@ bool searchLongestCompoundWord(TrieNode *root, const string &word, int index, in
       if (i == word.length() - 1) {
         return count >= 1; // Compound word requires at least one complete word before it
       }
-      if (searchLongestCompoundWord(root, word, i + 1, count + 1)) {
+      if (isCompoundWord(root, word, i + 1, count + 1)) {
         return true;
       }
     }
@@ -60,7 +60,7 @@ string findLongestCompoundWord(const vector<string> &words) {
   }
   string longestCompoundWord="";
   for (const string &word : words) {
-    if (searchLongestCompoundWord(root, word, 0, 0) &&
+    if (isCompoundWord(root, word, 0, 0) &&
         word.length() > longestCompoundWord.length()) {
       longestCompoundWord = word;
     }
